@@ -3,22 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Datenschutzerklärung – EbicsStart</title>
+<title>Datenschutzerklärung – Keybics</title>
+<link rel="icon" type="image/png" href="images/icon-64.png">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><a href="index.html">EbicsStart</a>
-<nav><a href="privacy.html">Privacy</a> <a href="datenschutz.html">Datenschutz</a> <a href="support.html">Support</a> <a href="impressum.html">Impressum</a></nav></header>
-<main>
-<h1 id="datenschutzerklärung-ebicsstart">Datenschutzerklärung –
-EbicsStart</h1>
-<p>Stand: 18. Oktober 2026</p>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html"><img src="images/icon-180.png" width="34" height="34" alt="">Keybics</a>
+<nav class="site-nav" aria-label="Navigation">
+<a href="benutzerhandbuch.html">Benutzerhandbuch</a>
+<a href="support.html">Support</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="privacy.html">Privacy</a>
+</nav>
+</div>
+</header>
+<main class="doc">
+<h1 id="datenschutzerklärung-keybics">Datenschutzerklärung –
+Keybics</h1>
+<p>Stand: 27. Oktober 2026</p>
 <h2 id="verantwortlicher">1. Verantwortlicher</h2>
-<p>sideos GmbH<br />
-Möckernstr. 120, 10963 Berlin, Germany<br />
-E-Mail: privacy@sideos.io</p>
+<p>etonec Digital Services GmbH<br />
+Kurfürstendamm 195, 10707 Berlin, Germany<br />
+E-Mail: info@etonec-ds.com</p>
 <h2 id="kurzfassung">2. Kurzfassung</h2>
-<p>EbicsStart ist eine lokale macOS-App. Wir erheben, speichern und
+<p>Keybics ist eine lokale macOS-App. Wir erheben, speichern und
 empfangen <strong>keine</strong> personenbezogenen Daten über Sie. Es
 gibt keine Benutzerkonten, keine Analyse- oder Tracking-Dienste, keine
 Werbung und keine Server des Herstellers, mit denen die App
@@ -47,7 +59,7 @@ Passphrase.</li>
 <p><strong>Speicherort:</strong>
 <code>~/Library/Application Support/EbicsStart/</code> auf Ihrem Mac (in
 der Version aus dem Mac App Store im App-Container
-<code>~/Library/Containers/com.etonec.ebicsstart/Data/Library/Application Support/EbicsStart/</code>).
+<code>~/Library/Containers/com.etonec.keybics/Data/Library/Application Support/EbicsStart/</code>).
 Die Schlüsseldatei ist mit Ihrer Passphrase verschlüsselt (AES-256). Die
 Passphrase liegt im macOS-Schlüsselbund. Die Dateien sind nur für Ihr
 Benutzerkonto lesbar.</p>
@@ -73,7 +85,10 @@ lit. b DSGVO, soweit wir überhaupt verantwortlich wären, was wir mangels
 eigener Datenverarbeitung nicht sind).</p>
 <h2 id="export">5. Export</h2>
 <p>Mit „Export JSON…“ schreiben Sie die Verbindung in eine Datei an
-einem Ort Ihrer Wahl. <strong>Die Datei enthält Ihre privaten Schlüssel
+einem Ort Ihrer Wahl. Vergeben Sie ein Export-Passwort, sind die
+privaten Schlüssel in der Datei damit verschlüsselt (verschlüsseltes
+PKCS#8, AES-256). Das Passwort wird nirgends gespeichert. <strong>Ohne
+Passwort enthält die Datei Ihre privaten Schlüssel
 unverschlüsselt.</strong> Was Sie mit der Datei tun, entscheiden allein
 Sie. Übertragen Sie sie nur auf sicherem Weg und löschen Sie nicht mehr
 benötigte Kopien.</p>
@@ -100,11 +115,11 @@ Verbindung per Rechtsklick auf „Delete Connection…“. Dabei werden
 Schlüsseldatei, Brief und gespeicherte Passphrase von diesem Mac
 gelöscht. Beim Löschen der App selbst bleibt der Datenordner bestehen
 (in der Mac-App-Store-Version der Container
-<code>~/Library/Containers/com.etonec.ebicsstart/</code>) und kann von
-Ihnen manuell entfernt werden. Den Schlüsselbund-Eintrag „EbicsStart key
-passphrase“ löschen Sie in der Schlüsselbundverwaltung. Bereits
-exportierte Dateien und bei der Bank gespeicherte Daten löschen Sie bzw.
-Ihre Bank gesondert.</p>
+<code>~/Library/Containers/com.etonec.keybics/</code>) und kann von
+Ihnen manuell entfernt werden. Den Schlüsselbund-Eintrag „Keybics key
+passphrase“ (bei älteren Versionen „Keybics key passphrase“) löschen Sie
+in der Schlüsselbundverwaltung. Bereits exportierte Dateien und bei der
+Bank gespeicherte Daten löschen Sie bzw. Ihre Bank gesondert.</p>
 <h2 id="ihre-rechte">9. Ihre Rechte</h2>
 <p>Da wir keine personenbezogenen Daten von Ihnen verarbeiten, können
 wir Auskunft, Berichtigung oder Löschung nicht aus eigenem Bestand
@@ -112,12 +127,24 @@ erfüllen. Gegenüber Ihrer Bank haben Sie die Rechte nach der DSGVO
 (Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit,
 Widerspruch). Sie haben zudem das Recht, sich bei einer
 Datenschutz-Aufsichtsbehörde zu beschweren.</p>
-<p>Bei Fragen erreichen Sie uns unter privacy@sideos.io. Wenn Sie uns
+<p>Bei Fragen erreichen Sie uns unter info@etonec-ds.com. Wenn Sie uns
 schreiben, verarbeiten wir Ihre E-Mail-Adresse und Ihre Nachricht nur,
 um Ihre Anfrage zu beantworten (Art. 6 Abs. 1 lit. f DSGVO).</p>
 <h2 id="änderungen">10. Änderungen</h2>
 <p>Wir passen diese Erklärung an, wenn sich die App oder die Rechtslage
 ändert. Es gilt die jeweils veröffentlichte Fassung.</p>
 </main>
+<footer class="site-footer">
+<div class="wrap">
+<div>Keybics ist ein Angebot der etonec Digital Services GmbH, Kurfürstendamm 195, 10707 Berlin.</div>
+<nav aria-label="Rechtliches">
+<a href="index.html">Startseite</a>
+<a href="support.html">Support</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="privacy.html">Privacy</a>
+<a href="impressum.html">Impressum</a>
+</nav>
+</div>
+</footer>
 </body>
 </html>

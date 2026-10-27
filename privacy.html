@@ -3,21 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy Policy – EbicsStart</title>
+<title>Privacy Policy – Keybics</title>
+<link rel="icon" type="image/png" href="images/icon-64.png">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><a href="index.html">EbicsStart</a>
-<nav><a href="privacy.html">Privacy</a> <a href="datenschutz.html">Datenschutz</a> <a href="support.html">Support</a> <a href="impressum.html">Impressum</a></nav></header>
-<main>
-<h1 id="privacy-policy-ebicsstart">Privacy Policy – EbicsStart</h1>
-<p>Last updated: 18 October 2026</p>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html"><img src="images/icon-180.png" width="34" height="34" alt="">Keybics</a>
+<nav class="site-nav" aria-label="Navigation">
+<a href="benutzerhandbuch.html">Benutzerhandbuch</a>
+<a href="support.html">Support</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="privacy.html">Privacy</a>
+</nav>
+</div>
+</header>
+<main class="doc">
+<h1 id="privacy-policy-keybics">Privacy Policy – Keybics</h1>
+<p>Last updated: 27 October 2026</p>
 <h2 id="controller">1. Controller</h2>
-<p>sideos GmbH<br />
-Möckernstr. 120, 10963 Berlin, Germany<br />
-Email: privacy@sideos.io</p>
+<p>etonec Digital Services GmbH<br />
+Kurfürstendamm 195, 10707 Berlin, Germany<br />
+Email: info@etonec-ds.com</p>
 <h2 id="summary">2. Summary</h2>
-<p>EbicsStart is a local macOS app. We do <strong>not</strong> collect,
+<p>Keybics is a local macOS app. We do <strong>not</strong> collect,
 store or receive any personal data about you. There are no user
 accounts, no analytics or tracking services, no advertising, and no
 servers operated by us that the app talks to. All data stays on your
@@ -42,7 +54,7 @@ bank’s responses. It contains neither keys nor passphrase.</li>
 <p><strong>Location:</strong>
 <code>~/Library/Application Support/EbicsStart/</code> on your Mac (in
 the Mac App Store version inside the app’s container,
-<code>~/Library/Containers/com.etonec.ebicsstart/Data/Library/Application Support/EbicsStart/</code>).
+<code>~/Library/Containers/com.etonec.keybics/Data/Library/Application Support/EbicsStart/</code>).
 The key file is encrypted with your passphrase (AES-256). The passphrase
 is stored in the macOS Keychain. Files are readable only by your user
 account.</p>
@@ -66,9 +78,11 @@ bank (HTTPS). Legal basis is carrying out the setup you requested (Art.
 not, since we do not process the data ourselves).</p>
 <h2 id="export">5. Export</h2>
 <p>“Export JSON…” writes the connection to a file in a location of your
-choice. <strong>The file contains your private keys
-unencrypted.</strong> What you do with it is entirely up to you.
-Transfer it only through a secure channel and delete copies you no
+choice. If you set an export password, the private keys in the file are
+encrypted with it (encrypted PKCS#8, AES-256); the password is not
+stored anywhere. <strong>Without a password, the file contains your
+private keys unencrypted.</strong> What you do with it is entirely up to
+you. Transfer it only through a secure channel and delete copies you no
 longer need.</p>
 <h2 id="what-we-do-not-do">6. What we do not do</h2>
 <ul>
@@ -90,22 +104,35 @@ no personal data from this. Apple’s privacy policy applies.</p>
 and choose “Delete Connection…”, which removes the key file, letter and
 stored passphrase from this Mac. Deleting the app itself leaves the data
 folder in place (in the Mac App Store version the container
-<code>~/Library/Containers/com.etonec.ebicsstart/</code>); you can
-remove it manually. Delete the Keychain item “EbicsStart key passphrase”
-in Keychain Access. Previously exported files, and data held by your
-bank, must be deleted separately.</p>
+<code>~/Library/Containers/com.etonec.keybics/</code>); you can remove
+it manually. Delete the Keychain item “Keybics key passphrase” (older
+versions: “Keybics key passphrase”) in Keychain Access. Previously
+exported files, and data held by your bank, must be deleted
+separately.</p>
 <h2 id="your-rights">9. Your rights</h2>
 <p>Because we do not process personal data about you, we cannot provide
 access, rectification or erasure from our own records. Towards your bank
 you have the rights under the GDPR (access, rectification, erasure,
 restriction, portability, objection). You also have the right to lodge a
 complaint with a data protection supervisory authority.</p>
-<p>For questions, contact us at privacy@sideos.io. If you write to us,
+<p>For questions, contact us at info@etonec-ds.com. If you write to us,
 we process your email address and message only to answer your request
 (Art. 6(1)(f) GDPR).</p>
 <h2 id="changes">10. Changes</h2>
 <p>We will update this policy if the app or the law changes. The version
 currently published applies.</p>
 </main>
+<footer class="site-footer">
+<div class="wrap">
+<div>Keybics ist ein Angebot der etonec Digital Services GmbH, Kurfürstendamm 195, 10707 Berlin.</div>
+<nav aria-label="Rechtliches">
+<a href="index.html">Startseite</a>
+<a href="support.html">Support</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="privacy.html">Privacy</a>
+<a href="impressum.html">Impressum</a>
+</nav>
+</div>
+</footer>
 </body>
 </html>

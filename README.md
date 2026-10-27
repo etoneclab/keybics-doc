@@ -1,9 +1,11 @@
-# EbicsStart – website
+# Keybics – website
 
-Static pages for EbicsStart (privacy policy, support, impressum), served by GitHub Pages.
+Landing page, user manual and legal pages for Keybics (formerly EbicsStart), served by GitHub Pages.
 
-- Edit the Markdown in `src/`, then run `./build.sh` (needs pandoc). The generated `*.html` files are committed, GitHub Pages serves them as they are.
+- `index.html` is hand-written. The other pages are generated: edit `src/*.md` (or `../Benutzerhandbuch.md` in the app repository), then run `./build.sh` (needs pandoc). The generated `*.html` files are committed; GitHub Pages serves them as they are.
+- Fonts are self-hosted in `fonts/` (SIL Open Font License, licence texts alongside), so the site makes no requests to Google.
 - `.nojekyll` switches Jekyll off.
 - Replace every bracketed placeholder before publishing: `grep -rnE '\[[^]]*\]([^(]|$)' src`.
 
-Pages: `index.html`, `privacy.html` (EN), `datenschutz.html` (DE), `support.html`, `impressum.html`.
+Pages: `index.html`, `benutzerhandbuch.html`, `privacy.html` (EN), `datenschutz.html` (DE), `support.html`, `impressum.html`.
+`privacy.html` is the Privacy Policy URL in App Store Connect; do not rename it.

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benutzerhandbuch – Keybics</title>
+<link rel="icon" type="image/png" href="images/icon-64.png">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html"><img src="images/icon-180.png" width="34" height="34" alt="">Keybics</a>
+<nav class="site-nav" aria-label="Navigation">
+<a href="benutzerhandbuch.html">Benutzerhandbuch</a>
+<a href="support.html">Support</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="privacy.html">Privacy</a>
+</nav>
+</div>
+</header>
+<main class="doc">
+<header class="doc-title">
+<h1>Keybics – Benutzerhandbuch</h1>
+<p>Version 1.1 · Stand Oktober 2026</p>
+<p><a href="Keybics-Benutzerhandbuch.pdf">Als PDF herunterladen</a></p>
+</header>
+<h1 id="wofür-ist-keybics">1. Wofür ist Keybics?</h1>
+<p>Wer ein Bankkonto per EBICS anbinden will, muss der Bank zuerst seine
+<strong>öffentlichen Schlüssel</strong> übermitteln und von der Bank
+freischalten lassen. Keybics führt Sie durch genau diesen Vorgang. Die
+App</p>
+<ul>
+<li>erzeugt Ihre drei Schlüssel (Signatur, Authentifizierung,
+Verschlüsselung) auf Ihrem Mac,</li>
+<li>erstellt den <strong>Initialisierungsbrief</strong> als PDF zum
+Ausdrucken und Unterschreiben,</li>
+<li>übermittelt die Schlüssel an die Bank (INI und HIA),</li>
+<li>prüft später, ob die Bank Sie freigeschaltet hat, und holt die
+<strong>Bankschlüssel</strong> ab (HPB),</li>
+<li>exportiert die gesamte Verbindung als <strong>JSON-Datei</strong>
+für Ihre Anwendung (veu-app).</li>
+</ul>
+<p>Keybics ruft keine Kontoauszüge ab und löst keine Zahlungen aus. Es
+unterstützt <strong>EBICS 3.0 (H005)</strong>. Bietet Ihre Bank nur
+EBICS 2.x an, kann die App nicht verwendet werden.</p>
+<h2 id="der-ablauf-im-überblick">Der Ablauf im Überblick</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Schritt</th>
+<th>Was passiert</th>
+<th>Wer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Bankdaten eintragen</td>
+<td>Sie</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Schlüssel und Brief erzeugen</td>
+<td>App</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Schlüssel an die Bank senden (INI/HIA), Brief ausdrucken,
+unterschreiben und an die Bank schicken</td>
+<td>Sie</td>
+</tr>
+<tr>
+<td>–</td>
+<td>Bank prüft den Brief und schaltet frei (je nach Bank Stunden bis
+Tage)</td>
+<td>Bank</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Freischaltung prüfen, Bankschlüssel abholen und Fingerabdrücke
+vergleichen</td>
+<td>Sie</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Verbindung als JSON exportieren</td>
+<td>Sie</td>
+</tr>
+</tbody>
+</table>
+<p>Schritte 1 bis 3 erledigen Sie am selben Tag. Zwischen Schritt 3 und
+4 liegt die Wartezeit auf die Bank. Die App darf in dieser Zeit
+geschlossen werden: Alles bleibt gespeichert.</p>
+<h1 id="voraussetzungen">2. Voraussetzungen</h1>
+<p><strong>Ein Mac mit macOS 14 (Sonoma) oder neuer.</strong> Intel und
+Apple Silicon werden unterstützt.</p>
+<p><strong>Diese Angaben von Ihrer Bank:</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Angabe</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EBICS-URL</td>
+<td>Adresse des EBICS-Servers der Bank, beginnt mit
+<code>https://</code></td>
+</tr>
+<tr>
+<td>Host-ID</td>
+<td>Kennung des Bankservers</td>
+</tr>
+<tr>
+<td>Partner-ID</td>
+<td>Kennung Ihres Unternehmens (Kunden-ID)</td>
+</tr>
+<tr>
+<td>User-ID</td>
+<td>Ihre Teilnehmerkennung</td>
+</tr>
+</tbody>
+</table>
+<p>Außerdem benötigen Sie den <strong>Namen der Bank</strong> (er
+erscheint als Empfänger auf dem Brief) und eine selbst gewählte
+<strong>Passphrase</strong>.</p>
+<div class="note">
+<p><strong>Passphrase:</strong> Sie verschlüsselt Ihre Schlüsseldatei.
+Wählen Sie eine lange, nur Ihnen bekannte Zeichenfolge und bewahren Sie
+sie getrennt auf. Sie lässt sich <strong>nicht
+wiederherstellen</strong>. Ohne sie sind die Schlüssel unbrauchbar, und
+die Anbindung muss bei der Bank neu eingerichtet werden.</p>
+</div>
+<h1 id="installation">3. Installation</h1>
+<ol type="1">
+<li>Öffnen Sie die Datei <code>Keybics-1.1.dmg</code>.</li>
+<li>Ziehen Sie <strong>Keybics</strong> auf den Ordner
+<strong>Programme</strong>.</li>
+<li>Starten Sie Keybics aus dem Programme-Ordner.</li>
+</ol>
+<p>Die App ist von Apple geprüft (notarisiert) und startet ohne Warnung.
+Sie sendet Daten ausschließlich an die EBICS-URL, die Sie eintragen.</p>
+<h1 id="schritt-für-schritt">4. Schritt für Schritt</h1>
+<p>Das Fenster hat links die Liste Ihrer <strong>Verbindungen</strong>
+und rechts die fünf Schritte. Ein grüner Haken markiert einen erledigten
+Schritt, ein blauer Rahmen den nächsten. Spätere Schritte sind
+ausgegraut, bis sie an der Reihe sind. Die Beschriftungen in der App
+sind englisch. Sie stehen im Handbuch in Anführungszeichen.</p>
+<p>Eine neue Verbindung legen Sie mit dem <strong>+</strong> in der
+Symbolleiste an (Tastenkürzel ⌘N). Sie können beliebig viele
+Verbindungen verwalten, etwa mehrere Banken.</p>
+<h2 id="schritt-1-bankverbindung-eintragen">Schritt 1: Bankverbindung
+eintragen</h2>
+<figure>
+<img src="img/schritt1-verbindung.png"
+alt="Schritt 1: Bankverbindung" />
+<figcaption aria-hidden="true">Schritt 1: Bankverbindung</figcaption>
+</figure>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Feld</th>
+<th>Eintrag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name (optional)</td>
+<td>Wie die Verbindung in der Liste heißt</td>
+</tr>
+<tr>
+<td>Bank name on the letter</td>
+<td>Der Name der Bank als Empfänger auf dem Brief</td>
+</tr>
+<tr>
+<td>EBICS URL</td>
+<td>Die Adresse des EBICS-Servers</td>
+</tr>
+<tr>
+<td>Host ID, Partner ID, User ID</td>
+<td>Die Angaben der Bank, genau so wie erhalten (Groß- und
+Kleinschreibung beachten)</td>
+</tr>
+<tr>
+<td>Company (optional)</td>
+<td>Ihr Firmenname, wird nur in die Exportdatei geschrieben</td>
+</tr>
+<tr>
+<td>Key passphrase</td>
+<td>Ihre Passphrase. Das Auge-Symbol blendet sie ein. Die App legt sie
+im Schlüsselbund ab</td>
+</tr>
+<tr>
+<td>Letter language</td>
+<td>Sprache des Briefs: Deutsch oder English</td>
+</tr>
+</tbody>
+</table>
+<p>Ihre Angaben speichert die App sofort. Haben Sie die Daten bereits in
+einer <code>.env</code>-Datei, übernimmt <strong>Import from
+.env…</strong> sie mit einem Klick (Variablen <code>EBICS_URL</code>,
+<code>EBICS_HOST_ID</code>, <code>EBICS_PARTNER_ID</code>,
+<code>EBICS_USER_ID</code>, <code>EBICS_PASSPHRASE</code>,
+<code>EBICS_NAME</code>, <code>EBICS_BANK_NAME</code>).</p>
+<p><strong>Check server</strong> fragt die Bank, welche EBICS-Versionen
+sie anbietet. Dabei werden keine Schlüssel gesendet. Die Meldung sollte
+bestätigen, dass der Server <strong>EBICS 3.0 (H005)</strong> anbietet.
+Ist die Verbindung nicht möglich, prüfen Sie die URL.</p>
+<h2 id="schritt-2-schlüssel-und-brief-erzeugen">Schritt 2: Schlüssel und
+Brief erzeugen</h2>
+<p>Klicken Sie auf <strong>Create Keys and Letter</strong>. Die App
+erzeugt drei RSA-Schlüssel mit 4096 Bit und ein Zertifikat für jeden.
+Das dauert einige Sekunden bis etwa eine halbe Minute, ein Hinweis am
+unteren Fensterrand zeigt den Fortschritt. <strong>In diesem Schritt
+wird nichts an die Bank gesendet.</strong></p>
+<p>Danach zeigt die App den Brief als Vorschau. Er hat drei Seiten:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Seite</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Signaturschlüssel (INI, Version A006) mit Unterschriftszeile</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Authentifizierungsschlüssel (HIA, Version X002)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Verschlüsselungsschlüssel (HIA, Version E002) mit
+Unterschriftszeile</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="img/brief.png" class="letter"
+alt="Der Initialisierungsbrief, Seite 1" />
+<figcaption aria-hidden="true">Der Initialisierungsbrief, Seite
+1</figcaption>
+</figure>
+<p>Jede Seite enthält das Zertifikat und dessen <strong>Hash
+(SHA-256)</strong>. Anhand des Hashs prüft die Bank, ob die elektronisch
+übermittelten Schlüssel zu Ihrem Brief gehören.</p>
+<p>Mit den Schaltflächen unter der Vorschau gehen Sie so weiter:</p>
+<ul>
+<li><strong>Print…</strong> druckt den Brief.</li>
+<li><strong>Save PDF…</strong> speichert ihn als PDF-Datei, zum Beispiel
+für den Versand per E-Mail oder Fax, sofern Ihre Bank das zulässt.</li>
+<li><strong>Show in Finder</strong> zeigt den Ordner mit der
+Schlüsseldatei.</li>
+</ul>
+<p>Drucken Sie den <strong>vollständigen Brief</strong>, unterschreiben
+Sie ihn als Kontoinhaber (Ort/Datum, Name/Firma, Unterschrift) und
+senden Sie ihn auf dem von der Bank vorgesehenen Weg ein. Welcher das
+ist (Post, Fax, Scan), sagt Ihnen die Bank.</p>
+<div class="note">
+<p>Sind Schlüssel einmal erzeugt, sind <strong>Host-, Partner- und
+User-ID, Passphrase und Briefsprache gesperrt</strong>, weil Schlüssel
+und Brief diese Angaben enthalten. Name, Bankname, URL und Firma können
+Sie weiter ändern.</p>
+</div>
+<h2 id="schritt-3-schlüssel-bei-der-bank-anmelden">Schritt 3: Schlüssel
+bei der Bank anmelden</h2>
+<figure>
+<img src="img/schritt3-registrieren.png"
+alt="Schritt 3: Schlüssel anmelden" />
+<figcaption aria-hidden="true">Schritt 3: Schlüssel
+anmelden</figcaption>
+</figure>
+<p>Klicken Sie auf <strong>Send INI and HIA…</strong> und bestätigen Sie
+die Rückfrage. Die App sendet</p>
+<ul>
+<li><strong>INI</strong>: den Signaturschlüssel und</li>
+<li><strong>HIA</strong>: den Authentifizierungs- und den
+Verschlüsselungsschlüssel.</li>
+</ul>
+<p>Nimmt die Bank beides an, erscheinen zwei grüne Haken mit Datum. Ab
+jetzt wartet die Verbindung auf die Freischaltung. Die Bank schaltet Sie
+frei, sobald sie den unterschriebenen Brief erhalten und die Hashes
+geprüft hat.</p>
+<p>Schlägt ein Teil fehl, zum Beispiel HIA, bleibt INI als erledigt
+markiert. Nach dem Beheben der Ursache sendet die Schaltfläche (dann
+<strong>Send HIA…</strong>) nur noch das Fehlende. <strong>Was die Bank
+schon angenommen hat, wird nie ein zweites Mal gesendet.</strong></p>
+<h2
+id="schritt-4-freischaltung-prüfen-und-bankschlüssel-abholen">Schritt 4:
+Freischaltung prüfen und Bankschlüssel abholen</h2>
+<figure>
+<img src="img/schritt4-bankschluessel.png"
+alt="Schritt 4: Bankschlüssel" />
+<figcaption aria-hidden="true">Schritt 4: Bankschlüssel</figcaption>
+</figure>
+<p>Sobald die Bank die Freischaltung bestätigt hat, klicken Sie auf
+<strong>Check Activation</strong>. Die App fragt die Bankschlüssel ab
+(HPB).</p>
+<ul>
+<li><strong>Noch nicht freigeschaltet:</strong> Sie sehen eine orange
+Meldung mit dem EBICS-Code der Bank. Das ist vor der Freischaltung
+normal. Versuchen Sie es später erneut.</li>
+<li><strong>Freigeschaltet:</strong> Die App speichert die Bankschlüssel
+und zeigt deren <strong>Fingerabdrücke</strong> an.</li>
+</ul>
+<p><strong>Vergleichen Sie die Fingerabdrücke mit denen, die Ihnen die
+Bank mitgeteilt hat</strong>, auf Papier oder auf ihrer Website. Erst
+wenn sie <strong>vollständig übereinstimmen</strong>, klicken Sie auf
+<strong>The Fingerprints Match</strong>. Der Vergleich schützt Sie
+davor, dass jemand zwischen Ihnen und der Bank falsche Bankschlüssel
+unterschiebt. Stimmen die Werte nicht überein, bestätigen Sie nicht und
+wenden Sie sich an die Bank.</p>
+<p>Holen Sie die Bankschlüssel später erneut ab und haben sie sich
+geändert, verlangt die App eine neue Bestätigung.</p>
+<h2 id="schritt-5-exportieren">Schritt 5: Exportieren</h2>
+<figure>
+<img src="img/schritt5-export.png" alt="Schritt 5: Export" />
+<figcaption aria-hidden="true">Schritt 5: Export</figcaption>
+</figure>
+<p><strong>Export JSON…</strong> schreibt die Verbindung in eine Datei
+im Format <em>veu-connection</em> (Version 1). Sie enthält Adresse, IDs,
+Ihre drei privaten Schlüssel mit Zertifikaten und die Bankschlüssel,
+sobald deren Fingerabdrücke bestätigt sind. Vor der Bestätigung fehlen
+die Bankschlüssel. Die empfangende Anwendung holt sie dann selbst per
+HPB.</p>
+<p><strong>Signature class</strong> (E, A, B, T) ist Ihre
+Unterschriftsberechtigung bei der Bank. Die Anmeldung bei der Bank legt
+sie nicht fest. Wählen Sie sie nur, wenn Sie sie kennen. Bei <strong>Not
+set</strong> lässt die App das Feld weg.</p>
+<p><strong>Export password (optional)</strong> verschlüsselt die drei
+privaten Schlüssel in der Datei (verschlüsseltes PKCS#8, AES-256). Geben
+Sie das Passwort zweimal ein. Stimmen beide Eingaben nicht überein,
+bleibt <strong>Export JSON…</strong> gesperrt. Zertifikate und
+Bankschlüssel sind öffentlich und bleiben unverschlüsselt. Die
+empfangende Anwendung fragt beim Import nach demselben Passwort. Die App
+speichert das Passwort nicht. Es lässt sich nicht wiederherstellen. Ohne
+das Passwort ist die Datei unbrauchbar.</p>
+<div class="warn">
+<p><strong>Ohne Export-Passwort enthält die Datei Ihre privaten
+Schlüssel unverschlüsselt.</strong> Jeder, der die Datei besitzt, kann
+sich gegenüber der Bank als Sie ausgeben. Vergeben Sie deshalb möglichst
+ein Passwort. Übertragen Sie die Datei nur auf sicherem Weg, speichern
+Sie sie nicht in Cloud-Ordnern oder E-Mails und löschen Sie nicht mehr
+benötigte Kopien.</p>
+</div>
+<h1 id="verbindungen-verwalten">5. Verbindungen verwalten</h1>
+<ul>
+<li><strong>Verbindung löschen:</strong> Rechtsklick auf den Eintrag in
+der Liste, dann <strong>Delete Connection…</strong>. Dabei werden
+Schlüsseldatei, Brief und gespeicherte Passphrase von diesem Mac
+entfernt. Exportieren Sie vorher, wenn Sie die Schlüssel noch
+brauchen.</li>
+<li><strong>Schlüssel neu erzeugen:</strong> Unter dem Brief gibt es
+<strong>Delete Keys…</strong>. Die Schlüssel und der Brief werden
+gelöscht, danach können Sie neue erzeugen. Hat die Bank Ihre Schlüssel
+schon, müssen Sie die Anmeldung mit der Bank neu durchlaufen. Eine
+Rückfrage warnt Sie davor.</li>
+<li><strong>Activity log:</strong> Am Ende der Seite zeigt eine
+aufklappbare Liste, was gesendet wurde und was die Bank geantwortet hat.
+Sie enthält weder Schlüssel noch Passphrase und ist hilfreich, wenn Sie
+den Support der Bank kontaktieren.</li>
+</ul>
+<h1 id="sicherheit-und-datenablage">6. Sicherheit und Datenablage</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Was</th>
+<th>Wo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schlüsseldatei (verschlüsselt mit Ihrer Passphrase)</td>
+<td><code>~/Library/Application Support/EbicsStart/Connections/&lt;Kennung&gt;/keys.json</code></td>
+</tr>
+<tr>
+<td>Initialisierungsbrief</td>
+<td>im selben Ordner: <code>ini-letter.pdf</code></td>
+</tr>
+<tr>
+<td>Einstellungen und Fortschritt (ohne Geheimnisse)</td>
+<td>im selben Ordner: <code>connection.json</code></td>
+</tr>
+<tr>
+<td>Protokoll</td>
+<td>im selben Ordner: <code>activity.log</code></td>
+</tr>
+<tr>
+<td>Passphrase</td>
+<td>im Schlüsselbund (Eintrag „Keybics key passphrase“)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Bei der Version aus dem Mac App Store liegt der Ordner im
+App-Container:
+<code>~/Library/Containers/com.etonec.keybics/Data/Library/Application Support/EbicsStart/…</code>.
+„Show in Finder“ öffnet den richtigen Ort.</li>
+<li>Schlüssel werden <strong>ausschließlich auf Ihrem Mac</strong>
+erzeugt und verlassen ihn nur, wenn Sie exportieren. Die Bank erhält die
+öffentlichen Teile.</li>
+<li>Die Dateien sind nur für Ihr Benutzerkonto lesbar.</li>
+<li><strong>Datensicherung:</strong> Time Machine sichert den Ordner
+mit. Für eine zusätzliche Sicherung exportieren Sie die Verbindung und
+verwahren die Datei so, wie es ihre Sensibilität verlangt (siehe Warnung
+bei Schritt 5).</li>
+<li>Gehen Schlüssel oder Passphrase verloren, kann die Bank die
+Anbindung zurücksetzen, und Sie beginnen bei Schritt 2 neu.</li>
+</ul>
+<h1 id="fehlermeldungen-und-hilfe">7. Fehlermeldungen und Hilfe</h1>
+<p>Meldet die Bank einen Fehler, zeigt Keybics den EBICS-Code, dessen
+Bezeichnung und, wo möglich, einen Hinweis.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Code</th>
+<th>Bedeutung und was zu tun ist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>091002, 091004</td>
+<td>Die Bank sieht den Teilnehmer noch nicht als bereit an. Vor der
+Freischaltung normal. Warten Sie auf die Bestätigung der Bank.</td>
+</tr>
+<tr>
+<td>061001</td>
+<td>Die Bank konnte die Signatur nicht prüfen. Vor der Freischaltung die
+übliche Antwort. Danach besitzt die Bank andere Schlüssel als diese
+Verbindung. Wenden Sie sich an die Bank.</td>
+</tr>
+<tr>
+<td>091003</td>
+<td>Teilnehmer unbekannt. Prüfen Sie Host-, Partner- und User-ID und ob
+INI und HIA angenommen wurden.</td>
+</tr>
+<tr>
+<td>091011</td>
+<td>Die Host-ID ist der Bank unbekannt.</td>
+</tr>
+<tr>
+<td>091010, 061002</td>
+<td>Das Nachrichtenformat wurde abgelehnt. Prüfen Sie URL und IDs und ob
+die Bank EBICS 3.0 anbietet.</td>
+</tr>
+<tr>
+<td>091103</td>
+<td>Verdacht auf Wiederholung. Prüfen Sie Datum, Uhrzeit und Zeitzone
+Ihres Macs.</td>
+</tr>
+<tr>
+<td>091218</td>
+<td>Die Bank besitzt diese Schlüssel bereits. Wurde INI oder HIA schon
+angenommen, senden Sie es nicht erneut.</td>
+</tr>
+<tr>
+<td>091207, 091217, 091219, 091214</td>
+<td>Die Bank handhabt Zertifikate anders. Fragen Sie nach ihrer
+Zertifikatsrichtlinie (X.509, selbstsignierte Zertifikate).</td>
+</tr>
+</tbody>
+</table>
+<p>Weitere typische Situationen:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Meldung oder Situation</th>
+<th>Ursache und Abhilfe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>„Enter a key passphrase first“</td>
+<td>Die Passphrase fehlt. Tragen Sie sie in Schritt 1 ein.</td>
+</tr>
+<tr>
+<td>„Wrong passphrase, or the key file is damaged“</td>
+<td>Die Passphrase stimmt nicht mit der beim Erzeugen verwendeten
+überein. Tragen Sie die ursprüngliche ein.</td>
+</tr>
+<tr>
+<td>„Could not reach the bank“</td>
+<td>Keine Internetverbindung oder falsche URL.</td>
+</tr>
+<tr>
+<td>„Settings incomplete“ in der Liste</td>
+<td>Ein Pflichtfeld in Schritt 1 fehlt oder ist ungültig. Der Hinweis
+unter den Schaltflächen nennt es.</td>
+</tr>
+<tr>
+<td>Bank antwortet mit HTTP-Status 4xx oder 5xx</td>
+<td>URL falsch oder Server der Bank gestört. Versuchen Sie es später
+erneut.</td>
+</tr>
+</tbody>
+</table>
+<p>Wenden Sie sich bei Fragen zur Freischaltung, zu Fingerabdrücken oder
+zu Zertifikaten an die EBICS-Betreuung Ihrer Bank und nennen Sie den
+Code aus der Meldung. Das <strong>Activity log</strong> hilft dabei.
+Schicken Sie niemandem Ihre Schlüssel, die Exportdatei oder Ihre
+Passphrase.</p>
+<h1 id="häufige-fragen">8. Häufige Fragen</h1>
+<p><strong>Kann ich Schritt 4 jederzeit wiederholen?</strong> Ja.
+<strong>Fetch Bank Keys Again</strong> holt die Bankschlüssel erneut.
+Haben sie sich geändert, müssen Sie die Fingerabdrücke neu
+bestätigen.</p>
+<p><strong>Muss die App während der Wartezeit offen bleiben?</strong>
+Nein. Beim nächsten Start steht die Verbindung im selben Zustand
+bereit.</p>
+<p><strong>Warum drei Schlüssel?</strong> EBICS trennt Aufgaben: Der
+Signaturschlüssel (A006) unterschreibt Aufträge, der
+Authentifizierungsschlüssel (X002) weist Ihre Nachrichten gegenüber der
+Bank nach, der Verschlüsselungsschlüssel (E002) schützt die Daten, die
+die Bank Ihnen sendet.</p>
+<p><strong>Kann ich Schlüssel aus einem früheren Programm
+weiterverwenden?</strong> Nein, die App legt immer neue Schlüssel an.
+Eine bestehende Anbindung bleibt unberührt, solange Sie keine neue
+Anmeldung bei der Bank abschließen.</p>
+<p><strong>Mehrere Benutzer oder Banken?</strong> Legen Sie pro Bank und
+Benutzer eine eigene Verbindung an.</p>
+<h1 id="technische-angaben">9. Technische Angaben</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>Protokoll</td>
+<td>EBICS 3.0, Version H005</td>
+</tr>
+<tr>
+<td>Aufträge</td>
+<td>HEV, INI, HIA, HPB</td>
+</tr>
+<tr>
+<td>Schlüssel</td>
+<td>A006, X002 und E002, jeweils RSA mit 4096 Bit</td>
+</tr>
+<tr>
+<td>Zertifikate</td>
+<td>selbstsigniert, SHA-256 mit RSA, ohne Ablaufdatum. Für INI/HIA
+zulässig, sofern die Bank keine Zertifikate einer Zertifizierungsstelle
+verlangt</td>
+</tr>
+<tr>
+<td>Schlüsseldatei</td>
+<td>JSON, jeder Eintrag mit AES-256 verschlüsselt (Schlüssel aus der
+Passphrase per PBKDF2)</td>
+</tr>
+<tr>
+<td>Exportformat</td>
+<td><code>veu-connection</code>, Version 1</td>
+</tr>
+<tr>
+<td>Briefformat</td>
+<td>PDF, DIN A4</td>
+</tr>
+</tbody>
+</table>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div>Keybics ist ein Angebot der etonec Digital Services GmbH, Kurfürstendamm 195, 10707 Berlin.</div>
+<nav aria-label="Rechtliches">
+<a href="index.html">Startseite</a>
+<a href="support.html">Support</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="privacy.html">Privacy</a>
+<a href="impressum.html">Impressum</a>
+</nav>
+</div>
+</footer>
+</body>
+</html>

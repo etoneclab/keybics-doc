@@ -1,16 +1,16 @@
-# Privacy Policy – EbicsStart
+# Privacy Policy – Keybics
 
-Last updated: 18 October 2026
+Last updated: 27 October 2026
 
 ## 1. Controller
 
-sideos GmbH
-Möckernstr. 120, 10963 Berlin, Germany
-Email: privacy@sideos.io
+etonec Digital Services GmbH
+Kurfürstendamm 195, 10707 Berlin, Germany
+Email: info@etonec-ds.com
 
 ## 2. Summary
 
-EbicsStart is a local macOS app. We do **not** collect, store or receive any personal data about you. There are no user accounts, no analytics or tracking services, no advertising, and no servers operated by us that the app talks to. All data stays on your Mac. The app sends data only to the EBICS address of your bank, which you enter yourself.
+Keybics is a local macOS app. We do **not** collect, store or receive any personal data about you. There are no user accounts, no analytics or tracking services, no advertising, and no servers operated by us that the app talks to. All data stays on your Mac. The app sends data only to the EBICS address of your bank, which you enter yourself.
 
 ## 3. Data the app processes on your Mac
 
@@ -22,7 +22,7 @@ The app processes data you enter or that is created during setup:
 - **Initialisation letter** as PDF.
 - **Activity log:** time and type of orders sent and the bank's responses. It contains neither keys nor passphrase.
 
-**Location:** `~/Library/Application Support/EbicsStart/` on your Mac (in the Mac App Store version inside the app's container, `~/Library/Containers/com.etonec.ebicsstart/Data/Library/Application Support/EbicsStart/`). The key file is encrypted with your passphrase (AES-256). The passphrase is stored in the macOS Keychain. Files are readable only by your user account.
+**Location:** `~/Library/Application Support/EbicsStart/` on your Mac (in the Mac App Store version inside the app's container, `~/Library/Containers/com.etonec.keybics/Data/Library/Application Support/EbicsStart/`). The key file is encrypted with your passphrase (AES-256). The passphrase is stored in the macOS Keychain. Files are readable only by your user account.
 
 This data leaves your Mac only in the cases described in sections 4 and 5. We have no access to it.
 
@@ -38,7 +38,7 @@ Private keys and the passphrase are not transmitted. The only recipient is your 
 
 ## 5. Export
 
-"Export JSON…" writes the connection to a file in a location of your choice. **The file contains your private keys unencrypted.** What you do with it is entirely up to you. Transfer it only through a secure channel and delete copies you no longer need.
+"Export JSON…" writes the connection to a file in a location of your choice. If you set an export password, the private keys in the file are encrypted with it (encrypted PKCS#8, AES-256); the password is not stored anywhere. **Without a password, the file contains your private keys unencrypted.** What you do with it is entirely up to you. Transfer it only through a secure channel and delete copies you no longer need.
 
 ## 6. What we do not do
 
@@ -55,13 +55,13 @@ When you obtain the app through the Mac App Store, Apple processes data (e.g. Ap
 
 ## 8. Retention and deletion
 
-Data stays until you delete it. In the app, right-click a connection and choose "Delete Connection…", which removes the key file, letter and stored passphrase from this Mac. Deleting the app itself leaves the data folder in place (in the Mac App Store version the container `~/Library/Containers/com.etonec.ebicsstart/`); you can remove it manually. Delete the Keychain item "EbicsStart key passphrase" in Keychain Access. Previously exported files, and data held by your bank, must be deleted separately.
+Data stays until you delete it. In the app, right-click a connection and choose "Delete Connection…", which removes the key file, letter and stored passphrase from this Mac. Deleting the app itself leaves the data folder in place (in the Mac App Store version the container `~/Library/Containers/com.etonec.keybics/`); you can remove it manually. Delete the Keychain item "Keybics key passphrase" (older versions: "Keybics key passphrase") in Keychain Access. Previously exported files, and data held by your bank, must be deleted separately.
 
 ## 9. Your rights
 
 Because we do not process personal data about you, we cannot provide access, rectification or erasure from our own records. Towards your bank you have the rights under the GDPR (access, rectification, erasure, restriction, portability, objection). You also have the right to lodge a complaint with a data protection supervisory authority.
 
-For questions, contact us at privacy@sideos.io. If you write to us, we process your email address and message only to answer your request (Art. 6(1)(f) GDPR).
+For questions, contact us at info@etonec-ds.com. If you write to us, we process your email address and message only to answer your request (Art. 6(1)(f) GDPR).
 
 ## 10. Changes
 

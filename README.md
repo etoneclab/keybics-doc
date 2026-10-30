@@ -8,4 +8,5 @@ Landing page, user manual and legal pages for Keybics (formerly EbicsStart), ser
 - Replace every bracketed placeholder before publishing: `grep -rnE '\[[^]]*\]([^(]|$)' src`.
 
 Pages: `index.html`, `benutzerhandbuch.html`, `privacy.html` (EN), `datenschutz.html` (DE), `support.html`, `impressum.html`.
+`demo.html` (hand-written) plays `video/keybics-demo.mp4`, the demo video linked in the App Review notes; it is not linked from the other pages.
 `privacy.html` is the Privacy Policy URL in App Store Connect; do not rename it.
